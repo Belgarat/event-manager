@@ -1,4 +1,10 @@
-<h1>
-  {{title}}
-</h1>
-<alert type="success">hello</alert>
+<div class="container-fluid">
+  <div class="row">
+    <div *ngIf="this.admin" class="col-xs-3">
+      <app-events></app-events>
+    </div>
+    <div [ngClass]="(this.admin)?'col-xs-9':'col-xs-12'">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

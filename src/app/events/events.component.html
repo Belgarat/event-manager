@@ -1,0 +1,20 @@
+<div class="table-responsive">  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Titolo</th>
+        <!--<th>Descrizione</th>-->
+        <th>Inizio evento</th>
+        <!--<th>Termine evento</th>
+        <th>Luogo</th>-->
+      </tr>
+    </thead>
+    <tr *ngFor="let eventitem of this.events">
+      <td>{{eventitem?.title}}</td>
+      <!--<td>{{eventitem?.description}}</td>-->
+      <td>{{eventitem?.startDate | date:'short'}}</td>
+      <!--<td>{{eventitem?.endDate | date:'medium'}}</td>
+      <td>{{eventitem?.place}}</td>-->
+    </tr>
+  </table>
+</div>
