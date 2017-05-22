@@ -5,6 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { Event } from '../models/event.model'
+import { RegisteredContacts } from '../models/registeredContacts.model';
 
 @Injectable()
 export class EventsService {
@@ -30,5 +31,9 @@ export class EventsService {
     findAll(): Observable<any>{
       return this.http.get(this.urlRoot+this.serviceName, {headers: this.getHeaders()})
                         .map((res:Response) => res.json())
+    }
+
+    addSubscription(data: any): Observable<Response>{
+        return this.http.post(this.urlRoot+"registeredContacts",data,this.getHeaders());
     }
 }
