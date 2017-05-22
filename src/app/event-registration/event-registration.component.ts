@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { EventsService } from '../services/events.service';
 import { Event } from '../models/event.model'
 
@@ -10,6 +11,15 @@ import { Event } from '../models/event.model'
 })
 export class EventRegistrationComponent implements OnInit {
   private event: Event;
+  formModel = new FormGroup({
+    registrationData: new FormGroup({
+      email: new FormControl()
+    }),
+    guestData: new FormGroup({  
+      name: new FormControl(),
+      surname: new FormControl()
+    })
+  })
 
   constructor(
     private eventsService: EventsService,

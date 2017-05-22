@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AlertModule } from 'ngx-bootstrap';
 
@@ -20,6 +21,7 @@ import { EventRegistrationComponent } from './event-registration/event-registrat
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
     AlertModule.forRoot()
