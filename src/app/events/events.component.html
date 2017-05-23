@@ -7,6 +7,7 @@
         <th>Inizio evento</th>
         <!--<th>Termine evento</th>
         <th>Luogo</th>-->
+        <th>Code</th>
       </tr>
     </thead>
     <tr *ngFor="let eventitem of this.events">
@@ -15,6 +16,7 @@
       <td>{{eventitem?.startDate | date:'short'}}</td>
       <!--<td>{{eventitem?.endDate | date:'medium'}}</td>
       <td>{{eventitem?.place}}</td>-->
+      <td>{{eventitem?.eventCode}}</td>
     </tr>
   </table>
 </div>

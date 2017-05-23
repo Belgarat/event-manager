@@ -5,4 +5,5 @@ export class Event {
     startDate: string;
     endDate: string;
     place: string;
+    eventCode: string;
 }
