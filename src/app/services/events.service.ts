@@ -28,12 +28,24 @@ export class EventsService {
                         .map((res:Response) => res.json())
     }
 
+    getEventByCode(code: string): Observable<any>{
+      let urlQuery = '/findByCode/'+code;
+      return this.http.get(this.urlRoot+this.serviceName+urlQuery, {headers: this.getHeaders()})
+                        .map((res:Response) => res.json())
+    }
+
+    getRegisteredByCode(code: string){
+      let urlQuery = '/registeredByCode/'+code;
+      return this.http.get(this.urlRoot+this.serviceName+urlQuery, {headers: this.getHeaders()})
+                        .map((res:Response) => res.json())
+    }
+
     findAll(): Observable<any>{
       return this.http.get(this.urlRoot+this.serviceName, {headers: this.getHeaders()})
                         .map((res:Response) => res.json())
     }
 
     addSubscription(data: any): Observable<Response>{
-        return this.http.post(this.urlRoot+"registeredContacts",data,this.getHeaders());
+        return this.http.post(this.urlRoot+"2registered",data,this.getHeaders());
     }
 }

@@ -12,7 +12,13 @@ import { RegisteredContacts } from '../models/registeredContacts.model';
 })
 export class EventRegistrationComponent implements OnInit {
   private eventId: number = 0;
+  private eventCode: string = "";
   private event: Event;
+  private registered;
+  private error: boolean = false;
+  private success: boolean = false;
+  private msg: string = "";
+  private findmail: boolean = false;
   private registeredContacts: RegisteredContacts = new RegisteredContacts;
   formModel = new FormGroup({
     registrationData: new FormGroup({
@@ -31,20 +37,49 @@ export class EventRegistrationComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    let id: number = this.route.snapshot.params["id"];
-    if(id){
-      this.eventId = id;
-      this.eventsService.getEvent(id).subscribe(data => this.event = data);
+    this.eventCode = this.route.snapshot.params["code"];
+    if(this.eventCode){
+      this.eventsService.getEventByCode(this.eventCode).subscribe(
+        (data) => {
+          this.event = data
+        }, 
+        (err) => {
+          console.log(err.ok);
+        });
+      this.eventsService.getRegisteredByCode(this.eventCode).subscribe(
+        (data) => {
+          this.registered = data
+        }, 
+        (err) => {
+          console.log(err.ok);
+        });
     }
   }
   register(){
     let form = this.formModel.value;
-    console.log(form);
     this.registeredContacts.email = form.registrationData.email;
-    this.registeredContacts.freeTextData = form.guestData.name + " " + form.guestData.surname;
-    this.registeredContacts.eventId = this.eventId;
-    this.registeredContacts.eventsId = 0;
-    console.log(this.registeredContacts);
-    this.eventsService.addSubscription(this.registeredContacts).subscribe(res => console.log(res), err => console.log(err));
+    this.registeredContacts.freeTextData = JSON.stringify({name: form.guestData.name, surname: form.guestData.surname});
+    this.registeredContacts.eventsId = this.event.id;
+    this.eventsService.addSubscription(this.registeredContacts).subscribe(
+      res => {
+        this.msg = "Operazione completata con successo!";
+        this.success = true;
+      }, 
+      err => {
+        if(err){
+          (err.status == 404)?this.msg = "Impossibile procedere, problemi di connessione con il server.":this.msg = "Errore sconosciuto";
+          this.error = true;
+        }
+      });
+  }
+
+  search(){
+    let field = this.formModel.value.registrationData.email;
+    this.findmail=false;
+    if(field.search("@")>0){
+      this.registered.registered.find((obj:any) => {
+        (obj.email == field)?this.findmail=true:this.findmail=false;
+      })
+    }
   }
 }
