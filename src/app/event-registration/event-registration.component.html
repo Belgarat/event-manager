@@ -1,11 +1,11 @@
 <div *ngIf="this.eventCode != ''">
     <h1>{{this.event?.title}}</h1>
     <form [formGroup]="formModel" class="form-inline">
-        <div formGroupName="registrationData" class="form-group input-group">
+        <div class="form-group input-group">
             <span class="input-group-addon">@</span>
             <input [ngClass]="(this.findmail)?'invalid':'valid'" (keyup)="search();" class="form-control" type="email" formControlName="email" placeholder="La tua email ...">
         </div>
-        <div formGroupName="guestData" class="form-group">
+        <div class="form-group">
             <input type="text" formControlName="name" placeholder="Nome" class="form-control">
             <input type="text" formControlName="surname" placeholder="Cognome" class="form-control">
         </div>

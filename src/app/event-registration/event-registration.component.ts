@@ -20,7 +20,7 @@ export class EventRegistrationComponent implements OnInit {
   private msg: string = "";
   private findmail: boolean = false;
   private registeredContacts: RegisteredContacts = new RegisteredContacts;
-  formModel = new FormGroup({
+  /*formModel = new FormGroup({
     registrationData: new FormGroup({
       email: new FormControl()
     }),
@@ -28,13 +28,21 @@ export class EventRegistrationComponent implements OnInit {
       name: new FormControl(),
       surname: new FormControl()
     })
-  })
+  })*/
+  private formModel: FormGroup;
 
   constructor(
     private eventsService: EventsService,
     private route: ActivatedRoute,
     private router: Router,
-    ) { }
+    private fb: FormBuilder,
+    ) {
+      this.formModel = fb.group({
+        'email': ['', Validators.email],
+        'name': [''],
+        'surname': ['']
+      })
+    }
 
   ngOnInit() {
     this.eventCode = this.route.snapshot.params["code"];
@@ -57,9 +65,13 @@ export class EventRegistrationComponent implements OnInit {
   }
   register(){
     let form = this.formModel.value;
-    this.registeredContacts.email = form.registrationData.email;
+/*    this.registeredContacts.email = form.registrationData.email;
     this.registeredContacts.freeTextData = JSON.stringify({name: form.guestData.name, surname: form.guestData.surname});
+    this.registeredContacts.eventsId = this.event.id;*/
+    this.registeredContacts.email = form.email;
+    this.registeredContacts.freeTextData = JSON.stringify({name: form.name, surname: form.surname});
     this.registeredContacts.eventsId = this.event.id;
+
     this.eventsService.addSubscription(this.registeredContacts).subscribe(
       res => {
         this.msg = "Operazione completata con successo!";
@@ -74,7 +86,7 @@ export class EventRegistrationComponent implements OnInit {
   }
 
   search(){
-    let field = this.formModel.value.registrationData.email;
+    let field = this.formModel.value.email;
     this.findmail=false;
     if(field.search("@")>0){
       this.registered.registered.find((obj:any) => {
