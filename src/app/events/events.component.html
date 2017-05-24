@@ -16,7 +16,7 @@
       <td>{{eventitem?.startDate | date:'short'}}</td>
       <!--<td>{{eventitem?.endDate | date:'medium'}}</td>
       <td>{{eventitem?.place}}</td>-->
-      <td>{{eventitem?.eventCode}}</td>
+      <td><a [href]="'/event/'+eventitem?.eventCode">{{eventitem?.eventCode}}</a></td>
     </tr>
   </table>
 </div>

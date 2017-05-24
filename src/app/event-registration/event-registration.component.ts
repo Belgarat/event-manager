@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
 import { EventsService } from '../services/events.service';
 import { Event } from '../models/event.model';
 import { RegisteredContacts } from '../models/registeredContacts.model';
@@ -21,6 +22,7 @@ export class EventRegistrationComponent implements OnInit {
   private findmail: boolean = false;
   private autorized: boolean = false;
   private name: string = "";
+  private counter: number = 10;
   private registeredContacts: RegisteredContacts = new RegisteredContacts;
   /*formModel = new FormGroup({
     registrationData: new FormGroup({
@@ -63,6 +65,13 @@ export class EventRegistrationComponent implements OnInit {
           console.log(err.ok);
         });
     }
+    /*let timer = Observable.timer(0,1000);
+    timer.subscribe(t=> {
+      this.counter = this.counter - 1 ;
+      if(this.counter==0){
+        window.location.href="http://www.google.it";
+      }
+    });*/
   }
   register(){
     let form = this.formModel.value;
@@ -96,6 +105,7 @@ export class EventRegistrationComponent implements OnInit {
   search(){
     let field = this.formModel.value.email;
     this.findmail=false;
+    this.autorized=false;
     if(field.search("@")>0){
       this.eventsService.getEventContacts(this.eventCode,field).subscribe(
         (data) => {

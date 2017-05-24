@@ -6,18 +6,18 @@
             <form [formGroup]="formModel" class="form-horizontal">
                 <div class="form-group input-group">
                     <span class="input-group-addon">@</span>
-                    <input [ngClass]="(this.findmail)?'invalid':'valid'" (keyup)="search();" class="form-control" type="email" formControlName="email" placeholder="Digita la tua email per effettuare la registrazione ...">
+                    <input [ngClass]="(this.findmail)?'invalid':'valid'" (keyup)="search();" class="form-control" type="email" formControlName="email" placeholder="Digita l'email in cui hai ricevuto l'invito per completare la registrazione ...">
                 </div>
                 <div *ngIf="this.autorized" class="form-group">
                     <input [value]="this?.name" type="text" formControlName="name" class="form-control">
                 </div>
                 <div *ngIf="this.autorized" class="form-group">
+                    <div *ngIf="this.autorized" class="help-inline alert alert-info">Controllo email effettuato, confermate il nominativo e terminate la registrazione.</div>
                     <button (click)="register()" class="btn btn-primary">Registrati all'evento!</button>
                 </div>
             </form>
         </div>
         <div *ngIf="this.findmail" class="help-inline alert alert-warning">Risulti registrato!</div>
-        <div *ngIf="this.autorized" class="help-inline alert alert-info">Mail corretta, procedere con l'iscrizione.</div>
         <div *ngIf="this.error" class="alert alert-danger" role="alert">{{this?.msg}}</div>
         <div *ngIf="this.success" class="alert alert-success" role="alert">{{this?.msg}}</div>
     </div>
