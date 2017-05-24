@@ -19,6 +19,8 @@ export class EventRegistrationComponent implements OnInit {
   private success: boolean = false;
   private msg: string = "";
   private findmail: boolean = false;
+  private autorized: boolean = false;
+  private name: string = "";
   private registeredContacts: RegisteredContacts = new RegisteredContacts;
   formModel = new FormGroup({
     registrationData: new FormGroup({
@@ -26,7 +28,6 @@ export class EventRegistrationComponent implements OnInit {
     }),
     guestData: new FormGroup({  
       name: new FormControl(),
-      surname: new FormControl()
     })
   })
 
@@ -64,6 +65,13 @@ export class EventRegistrationComponent implements OnInit {
       res => {
         this.msg = "Operazione completata con successo!";
         this.success = true;
+        this.eventsService.getRegisteredByCode(this.eventCode).subscribe(
+          (data) => {
+            this.registered = data
+          }, 
+          (err) => {
+            console.log(err.ok);
+          });
       }, 
       err => {
         if(err){
@@ -77,9 +85,26 @@ export class EventRegistrationComponent implements OnInit {
     let field = this.formModel.value.registrationData.email;
     this.findmail=false;
     if(field.search("@")>0){
-      this.registered.registered.find((obj:any) => {
-        (obj.email == field)?this.findmail=true:this.findmail=false;
-      })
+      this.eventsService.getEventContacts(this.eventCode,field).subscribe(
+        (data) => {
+          if(data.contacts.length > 0){
+            var email = this.registered.registered.find((obj:any) => {
+              if(obj.email == field){
+                return true;
+              }
+            })
+            console.log(email);
+            if(email){
+                this.findmail=true;
+                this.autorized = false;
+            }else{
+              this.findmail=false;
+              this.autorized=true;
+              this.name = data.contacts[0].freeTextData;
+            }
+          }
+        }
+      )
     }
   }
 }

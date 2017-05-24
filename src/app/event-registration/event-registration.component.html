@@ -1,20 +1,25 @@
-<div *ngIf="this.eventCode != ''">
-    <h1>{{this.event?.title}}</h1>
-    <form [formGroup]="formModel" class="form-inline">
-        <div formGroupName="registrationData" class="form-group input-group">
-            <span class="input-group-addon">@</span>
-            <input [ngClass]="(this.findmail)?'invalid':'valid'" (keyup)="search();" class="form-control" type="email" formControlName="email" placeholder="La tua email ...">
+<div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <div *ngIf="this.eventCode != ''">
+            <h1 class="text-center">{{this.event?.title}}</h1>
+            <form [formGroup]="formModel" class="form-horizontal">
+                <div formGroupName="registrationData" class="form-group input-group">
+                    <span class="input-group-addon">@</span>
+                    <input [ngClass]="(this.findmail)?'invalid':'valid'" (keyup)="search();" class="form-control" type="email" formControlName="email" placeholder="Digita la tua email per effettuare la registrazione ...">
+                </div>
+                <div *ngIf="this.autorized" formGroupName="guestData" class="form-group">
+                    <input [value]="this?.name" type="text" formControlName="name" class="form-control">
+                </div>
+                <div *ngIf="this.autorized" class="form-group">
+                    <button (click)="register()" class="btn btn-primary">Registrati all'evento!</button>
+                </div>
+            </form>
         </div>
-        <div formGroupName="guestData" class="form-group">
-            <input type="text" formControlName="name" placeholder="Nome" class="form-control">
-            <input type="text" formControlName="surname" placeholder="Cognome" class="form-control">
-        </div>
-        <div class="form-group">
-            <button (click)="register()" class="btn btn-primary">Registrati all'evento!</button>
-        </div>
-    </form>
+        <div *ngIf="this.findmail" class="help-inline alert alert-warning">Risulti registrato!</div>
+        <div *ngIf="this.autorized" class="help-inline alert alert-info">Mail corretta, procedere con l'iscrizione.</div>
+        <div *ngIf="this.error" class="alert alert-danger" role="alert">{{this?.msg}}</div>
+        <div *ngIf="this.success" class="alert alert-success" role="alert">{{this?.msg}}</div>
+    </div>
+    <div class="col-sm-4"></div>
 </div>
-<div *ngIf="this.findmail" class="help-inline alert alert-warning">Risulti registrato!</div>
-<div *ngIf="this.error" class="alert alert-danger" role="alert">{{this?.msg}}</div>
-<div *ngIf="this.success" class="alert alert-success" role="alert">{{this?.msg}}</div>
-<div class="alert alert-info">Digita la tua email per effettuare la registrazione.</div>
