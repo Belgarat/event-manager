@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app works!';
-  private admin: boolean = false;
+  public admin: boolean = false;
 }
