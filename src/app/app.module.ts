@@ -12,11 +12,17 @@ import { EventsService } from './services/events.service';
 import { EventsComponent } from './events/events.component';
 import { EventRegistrationComponent } from './event-registration/event-registration.component';
 
+//Authentication import
+import { AuthComponent } from './auth/auth.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guard/auth.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
     EventsComponent,
-    EventRegistrationComponent
+    EventRegistrationComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +32,7 @@ import { EventRegistrationComponent } from './event-registration/event-registrat
     AppRoutingModule,
     AlertModule.forRoot()
   ],
-  providers: [EventsService],
+  providers: [EventsService,AuthService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
