@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   user: Users;
   public admin: boolean = false;
 
-  constructor(private authService: AuthService){
+  constructor(public authService: AuthService){
 
   }
 
