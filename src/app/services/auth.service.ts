@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthService {
-  private serviceUrl:string = "http://www.stdout.it:3001/api";
+  public serviceUrl:string = "http://www.stdout.it:3001/api";
 
   constructor(private http:Http){
   }
