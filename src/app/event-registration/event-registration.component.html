@@ -1,4 +1,4 @@
-<div class="row">
+<div id="registration" class="row">
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
         <div *ngIf="this.eventCode != ''">
@@ -7,6 +7,7 @@
                 <div class="form-group input-group">
                     <span class="input-group-addon">@</span>
                     <input [ngClass]="(this.findmail)?'invalid':'valid'" (keyup)="search();" class="form-control" type="email" formControlName="email" placeholder="Digita l'email in cui hai ricevuto l'invito per completare la registrazione ...">
+                    <span *ngIf="this.searching" class="input-group-addon"><img height="20" src="assets/images/spin.gif"></span>
                 </div>
                 <div *ngIf="this.autorized" class="form-group">
                     <input value="{{this.name}}" type="text" formControlName="name" class="form-control">
@@ -17,7 +18,8 @@
                 </div>
             </form>
         </div>
-        <div *ngIf="this.findmail" class="help-inline alert alert-warning">Risulti registrato!</div>
+        <div *ngIf="this.findmail" class="help-inline alert alert-warning">Sei già registrato registrato!</div>
+        <div *ngIf="this.notfound" class="help-inline alert alert-warning">Email non valida. Continuare a digitare o verificare.</div>
         <div *ngIf="this.error" class="alert alert-danger" role="alert">{{this?.msg}}</div>
         <div *ngIf="this.success" class="alert alert-success" role="alert">{{this?.msg}}</div>
         <div *ngIf="this.counter!=0" class="alert alert-info"><h1>Grazie! Verrà reindirizzato al sito pricipale fra: {{this?.counter}}</h1></div>

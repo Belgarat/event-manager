@@ -1,6 +1,16 @@
 input.valid{
     box-shadow: 0px 0px 6px green;
+    
 }
 input.invalid{
     box-shadow: 0px 0px 6px darkgoldenrod;
+}
+div.alert{
+    border: 1px solid #333;
+}
+#registration{
+    margin: 18% auto;
+    width: 60%;
+    background-color: rgba(125,125,125,0.3);
+    border-radius: 15px;
 }

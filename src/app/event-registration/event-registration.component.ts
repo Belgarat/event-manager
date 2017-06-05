@@ -20,7 +20,10 @@ export class EventRegistrationComponent implements OnInit {
   public success: boolean = false;
   private msg: string = "";
   public findmail: boolean = false;
+  public notfound: boolean = false;
   private autorized: boolean = false;
+  private searching: boolean = false;
+  private spinTimeout: any;
   private name: string = "";
   public counter: number = 0;
   private registeredContacts: RegisteredContacts = new RegisteredContacts;
@@ -101,33 +104,47 @@ export class EventRegistrationComponent implements OnInit {
       });
   }
 
-  search(){
-    let field = this.formModel.value.email;
-    this.findmail=false;
-    this.autorized=false;
-    if(field.search("@")>0){
-      this.eventsService.getEventContacts(this.eventCode,field).subscribe(
+  search() {
+    const field = this.formModel.value.email;
+    this.findmail = false;
+    this.autorized = false;
+    this.notfound = false;
+    field === '' ? this.searching = false : this.searching = true;
+    clearTimeout(this.spinTimeout);
+    if (field.search('@') > 0) {
+      this.spinTimeout = setTimeout(() => {
+        this.searching = false;
+      }
+      , 1000);
+      this.eventsService.getEventContacts(this.eventCode, field).subscribe(
         (data) => {
-          if(data.contacts.length > 0){
-            var email = this.registered.registered.find((obj:any) => {
-              if(obj.email == field){
+          if (data.contacts.length > 0) {
+            var email = this.registered.registered.find((obj: any) => {
+              if (obj.email === field) {
                 return true;
               }
-            })
-            console.log(email);
-            if(email){
-                this.findmail=true;
+            });
+            if (email) {
+                this.searching = false;
+                this.findmail = true;
                 this.autorized = false;
-            }else{
-              this.findmail=false;
-              this.autorized=true;
-              
+            }else {
+              this.findmail = false;
+              this.autorized = true;
               this.name = data.contacts[0].freeTextData;
               //this.formModel.patchValue({name: data.contacts[0].freeTextData});
             }
           }
         }
-      )
+      );
+    }else {
+      this.spinTimeout = setTimeout(() => {
+          if (field) {
+            this.searching = false;
+            this.notfound = true;
+          }
+        }
+        , 1000);
     }
   }
 }
